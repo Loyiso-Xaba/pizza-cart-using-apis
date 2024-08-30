@@ -1,0 +1,229 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Perfect Pizza</title>
+    <script defer src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js"></script>
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+    <link rel="stylesheet"
+        href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-icons/1.10.3/font/bootstrap-icons.min.css">
+
+</head>
+
+
+<body x-data="pizzaCart">
+
+    <div class="headings">
+        <h1>Perfect Pizza</h1>
+       
+    </div>
+
+    <div x-cloak>
+        <div>
+            <div class="stepper">
+                <div>
+                    Username: <input type="text" x-model="username" class="pay">
+                    <button @click="login" class="color-button" x-show="!cartId">Log-in</button>
+                    <button @click="logout" class="color-button" x-show="username && cartId">Log-out</button>
+                </div>
+                <div x-show="cartId">
+                    Cart code: <span x-text="cartId"></span>
+                </div>
+                
+            </div>
+
+            <div class="dropdown" x-data="{ open: false }" @click="open = !open">
+                <button @click="fetchOrderHistory()" class="color-button" x-show="username && cartId">Order History</button>
+                <div class="dropdown-content" x-show="open" @click.outside="open = false">
+                    <div>
+
+                        <div>
+                            <template x-if="historicalOrders.length > 0">
+                                <div>
+                                    <template x-for="order in historicalOrders" :key="order.cart_code">
+                                        <div>
+                                            <h3>Order ID: <span x-text="order.id"></span></h3>
+                                            <p>Total: R<span x-text="order.total.toFixed(2)"></span></p>
+                                            <ul>
+                                                <template x-for="pizza in order.pizzas" :key="pizza.id">
+                                                    <li>
+                                                        <span x-text="pizza.flavour"></span> - <span x-text="pizza.size"></span> - R<span
+                                                            x-text="pizza.total.toFixed(2)"></span>
+                                                    </li>
+                                                </template>
+                                            </ul>
+                                        </div> 
+                                    </template>
+                                </div>
+                            </template>
+                            <template x-if="historicalOrders.length === 0">
+                                <p>Past Orders not available</p>
+                            </template>
+                        </div>
+                       
+                        <div x-show="cartId">
+                            Cart code: <span x-text="cartId"></span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
+    </div>
+    <div class="cart-container">
+        <div x-show="cartTotal > 0">
+            <h2 style="text-align: center;">Cart</h2>
+            <div class="table-container">
+                <table class="table">
+                    <thead>
+                        <tr>
+                            <th>Flavour</th>
+                            <th>Size</th>
+                            <th>Price</th>
+                            <th>Quantity</th>
+                            <th>Damage</th>
+                        </tr>
+                    </thead>
+
+                    <template x-for="pizza in cartPizzas">
+                        <tr>
+                            <td x-text="pizza.flavour"></td>
+                            <td x-text="pizza.size"></td>
+                            <td x-text="pizza.price"></td>
+                            <td>
+                                <button @click="addPizzaToCart(pizza.id)" class="color-button">+</button>
+                                <span x-text="pizza.quantity">0</span>
+                                <button @click="removePizzaFromCart(pizza.id)" class="color-button">-</button>
+                            </td>
+                            <td x-text="pizza.damage"></td>
+                        </tr>
+                    </template>
+
+                    <tfoot>
+                        <tr class="total-row">
+                            <td colspan="4">Total</td>
+                            <td class="flex-container">R <span x-text="cartTotal"></span></td>
+                        </tr>
+                        <tr class="total-row" style="text-align: center;">
+                            <td colspan="3">Amount:</td>
+                            <td><input x-model="paymentAmount" type="number" class="pay"></td>
+                            <td><button @click="payForCart()" class="color-button">Pay</button></td>
+                        </tr>
+                        <tr class="total-row" style="text-align: center;">
+                            <td colspan="5">
+                                <button @click="clearCart" class="color-button">Clear Cart</button>
+                            </td>
+                        </tr>
+                    </tfoot>
+                </table>
+            </div>
+        </div>
+    </div>
+    </div>
+
+
+    <div x-show="message" x-text="message" style="text-align: center;" :class="messageType">Message here</div>
+    <div x-show="change" x-text="'Change: R' + change.toFixed(2)" style="text-align: center;" class="change-message">
+    </div>
+
+    <div x-show="username && cartId" class="something">
+
+        <!-- <div class="featured-pizzas">
+            <h2 x-show="featuredPizzas.length >= 0" style="text-align: center;">Featured Pizzas</h2>
+            <div>
+                <template x-for="pizza in featuredPizzas">
+                    <div class="apizza">
+                    
+                        <strong><span x-text="pizza.flavour"></span></strong>
+                        <img src="OIP.jpeg" alt="pizza" width="30">
+                        <strong><span x-text="pizza.size"></span></strong>
+                        <img src="OIP.jpeg" alt="pizza" width="30">
+                        <span>R<span x-text="pizza.price"></span>
+
+                            <button class="color-button" @click="addPizzaToCart(pizza.id)">Add to cart</button>
+                    </div>
+                </template>
+            </div>
+        </div> -->
+
+        <h2 style="text-align: center;">Catalogue </h2>
+
+        <div class="stepper3">
+            <div style="display: flex;">
+                <div style="flex: 1; text-align: left; padding: 40px;">
+                    
+                    <label for="pizzaTypeOrSize">Filter by: </label>
+                    <select id="filterCriteria" x-model="filterCriteria" style="cursor: pointer;" @change="updateFilterOptions" class="color-button-two">
+                        <option value=""></option>
+                        <option value="type">Type</option>
+                        <option value="size">Size</option>
+                    </select>
+                </div>
+        
+                <div style="flex: 5; text-align: right; padding: 20px">
+                    <label for="pizzaTypeOrSize">Select: </label>
+                    <select id="pizzaTypeOrSize" x-model="selectedTypeOrSize" @change="filterPizzas"
+                        class="color-button-two">
+                        <option value="">All</option>
+                        <template x-if="filterCriteria === 'type'">
+                            <template x-for="type in pizzaTypes">
+                                <option :value="type" x-text="type"></option>
+                            </template>
+                        </template>
+                        <template x-if="filterCriteria === 'size'">
+                            <template x-for="size in pizzaSizes">
+                                <option :value="size" x-text="size"></option>
+                            </template>
+                        </template>
+                    </select>
+                </div>
+            </div>
+        </div>
+
+        <template x-for="pizza in filteredPizzas">
+            <div class="stepper2" style="text-align: center;">
+                <strong><span x-text="pizza.flavour"></span></strong>
+                <img src="OIP.jpeg" alt="pizza" width="30">
+                <strong><span x-text="pizza.size"></span></strong>
+                <img src="OIP.jpeg" alt="pizza" width="30">
+                <span>R<span x-text="pizza.price"></span>
+
+                    <div class="pizza-buttons">
+                        <button @click="addPizzaToCart(pizza.id)" class="color-button">Add to cart</button>
+                        <button @click="manageFeaturedPizzas(pizza.id)" class="color-button">Feature pizza</button>
+                    </div>
+            </div>
+        </template>
+    </div>
+
+    <footer>
+        <div class="pizza contact_details" style="color:antiquewhite;">
+            
+            <div class="contact">
+                <h2>Contact details</h2><br>
+                <div>Hit us up on: 081 541 8822</div><br>
+                <div>Or e-mail @: xloyiso@pizzacheffs</div><br>
+            </div>
+
+            <div class="address">
+                <div>Pizza Cheffs</div><br>
+                <div>Germiston</div><br>
+                <div>Etihad</div>
+            </div>
+
+        </div>
+
+        <div style="text-align: center;">
+            <p> &copy; Est 2001 </p>
+        </div>
+    </footer>
+
+    <script src="./pizza.js"></script>
+</body>
+
+</html>

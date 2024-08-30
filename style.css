@@ -1,0 +1,272 @@
+body {
+    background-color: #0ed062;
+    font-family:Verdana, Geneva, Tahoma, sans-serif
+}
+
+
+.pizza {
+    padding: 1em;
+    border: 1px solid;
+    margin: 1em;
+    border-radius: 0.2em;
+}
+
+.pizzar {
+    padding: 1em;
+    border: 1px solid;
+    margin: 1em;
+    border-radius: 0.2em;
+    background-color: #1c9013;
+}
+
+.contact_details {
+    background-color: #1e9494;
+    padding-bottom: 5em;
+}
+
+@media (min-width: 960px) {
+    .pizzas {
+        display: flex;
+    }
+}
+
+.contact {
+   
+    text-align: center;
+}
+
+.address {
+  
+    text-align: center;
+}
+
+.heading {
+    text-align: center;
+}
+.stepper{
+    text-align: center;
+}
+
+.stepper2 {
+    padding: 0.5em;
+    margin: 1em;
+    border-radius: 0.2em;
+    background-color: #a1ba23;
+    /*justify-content: center; */
+    display:flex;
+    align-items: center;
+    text-align: center;
+    gap: 10px;
+}
+
+.stepper3 {
+    background-color: #175779;
+    margin: 1em;
+    border-radius: 0.2em;
+    text-align: center;
+}
+
+
+.pizza-buttons {
+    display: flex;
+    justify-content: center;
+    gap: 10px;
+    margin-top: 15px;
+   
+}
+
+.headings {
+    text-align: center;
+    padding: 1em;
+    margin: 1em;
+    border-radius: 0.2em;
+    background-image: url(pizza.jpg);
+    background-size: cover;
+    background-position: center;
+}
+
+.headings h4 {
+    color: rgb(3, 36, 17);
+    text-shadow: 1px 1px 0 white, 
+                 -1px -1px 0 white,
+                 0 0 0 rgb(252, 250, 250);   
+  }
+
+  .headings h1 {
+    color: rgb(16, 70, 25);
+    text-shadow: 1px 1px 0 white, 
+                 -1px -1px 0 white,
+                 0 0 0 rgb(248, 247, 247);   
+  }
+
+.color-button {
+    cursor: pointer;
+    background-color: #a7d323;
+    border: 1px solid;
+    border-radius: 3px;
+    transition: transform 0.1s ease;
+}
+
+.color-button:hover {
+    background-color: #a5a58d;
+}
+
+.color-button:active {
+    transform: scale(0.95);
+}
+
+.color-button-two {
+    cursor: pointer;
+    background-color: #88ab16;
+    border: 1px solid;
+    border-radius: 3px;
+    transition: transform 0.1s ease;
+}
+
+.color-button-two:hover {
+    background-color: #168a54;
+}
+
+.color-button-two:active {
+    transform: scale(0.95);
+}
+
+.pay {
+    background-color: #0fa41e;
+    border: 1px solid;
+    border-radius: 3px;
+}
+
+.table {
+    width: 80%;
+    
+    border-collapse: collapse;
+    background-color: #43c629;
+    color: #073c04;
+    margin: 1em auto;
+    border-radius: 0.8em;
+    table-layout: auto;
+}
+
+.table,
+.table th,
+.table td {
+    border: 1px solid rgb(244, 246, 246);
+}
+
+.table th,
+.table td {
+    padding: 10px;
+    text-align: center;
+}
+
+.table th {
+    background-color: #0a550c;
+    color: #f2e8cf;
+}
+
+.table .total-row {
+    font-weight: bold;
+}
+
+.table .total-row td {
+    border-top: 1px solid #f4f1f1;
+}
+
+.pay-now {
+    align-items: center;
+}
+
+[x-cloak] {
+    display: none !important;
+}
+
+.stepper {
+    padding: 1em;
+    margin: 1em;
+}
+
+.table-container {
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch; 
+    margin: 0 auto;
+}
+
+
+@media (max-width: 768px) {
+    .table {
+        font-size: 0.9em;
+    }
+    
+    .table th, .table td {
+        padding: 8px; 
+    }
+}
+
+@media (max-width: 480px) {
+    .table {
+        font-size: 0.8em; 
+    }
+    
+    .table th, .table td {
+        padding: 6px; 
+    }
+}
+
+@media (max-width: 382px) {
+    .table {
+        font-size: 0.7em; 
+    }
+    
+    .table th, .table td {
+        padding: 6px; 
+    }
+}
+
+@media (max-width: 360px) {
+    .table {
+        font-size: 0.7em; 
+    }
+    
+    .table th, .table td {
+        padding: 4px; 
+    }
+}
+
+@media (max-width: 300px) {
+    .table {
+        font-size: 0.7em; 
+    }
+    
+    .table th, .table td {
+        padding: 3px; 
+    }
+}
+
+@media (max-width: 200px) {
+    .table {
+        font-size: 0.3em; 
+    }
+    
+    .table th, .table td {
+        padding: 2px; 
+    }
+}
+
+.error-message {
+    color: rgb(10, 2, 2);
+}
+
+.success-message {
+    color: rgb(224, 231, 17);
+}
+
+.change-message {
+    color:  rgb(224, 231, 17);
+}
+
+.dropdown {
+    padding: 1em;
+    margin: 1em;
+}
+
